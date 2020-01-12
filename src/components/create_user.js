@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   MDBRow, MDBCol, MDBListGroup, MDBListGroupItem, MDBCard, MDBCardBody,
-  MDBCardTitle, MDBInput
+  MDBCardTitle, MDBInput, MDBBtn, MDBIcon
 } from 'mdbreact';
 import axios from 'axios';
 
@@ -13,8 +13,11 @@ export default class CreateUser extends Component {
   }
 
   async componentDidMount () {
+    this.getUsers();
+  }
+
+  getUsers = async () => {
     const res = await axios.get('http://localhost:3000/api/users');
-    console.log(res.data);
     this.setState ({
       users: res.data
     })
@@ -26,6 +29,16 @@ export default class CreateUser extends Component {
     })
   }
 
+  createUser = async (e) => {
+    e.preventDefault();
+    const res = await axios.post('http://localhost:3000/api/users', {
+      username: this.state.username,
+      lastname: this.state.lastname
+    })
+    this.setState({username: '', lastname: ''})
+    this.getUsers();
+  }
+
   render () {
     return (
       <MDBRow>
@@ -33,9 +46,12 @@ export default class CreateUser extends Component {
           <MDBCard>
             <MDBCardBody>
               <MDBCardTitle>Create New User</MDBCardTitle>
-              <form>
-                <MDBInput id="username" type="text" label="User Name" onChange={this.changeInput} />
-                <MDBInput id="lastname" type="text" label="Last Name" onChange={this.changeInput} />
+              <form onSubmit={this.createUser}>
+                <MDBInput id="username" value={this.state.username} type="text" label="User Name" onChange={this.changeInput} outline />
+                <MDBInput id="lastname" value={this.state.lastname} type="text" label="Last Name" onChange={this.changeInput} outline />
+                <div className="text-center">
+                  <MDBBtn type="submit" color="secondary" className="w-75">Save</MDBBtn>
+                </div>
               </form>
             </MDBCardBody>
           </MDBCard>
@@ -44,7 +60,8 @@ export default class CreateUser extends Component {
           <MDBListGroup>
             {this.state.users.map(user =>
               <MDBListGroupItem key={user._id}>
-                {user.username}
+                {user.username} {user.lastname}
+                <MDBIcon icon="trash-alt" className="red-text float-right" style={{cursor:'pointer'}} />
               </MDBListGroupItem>
             )}
           </MDBListGroup>
