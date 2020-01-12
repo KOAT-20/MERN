@@ -39,6 +39,12 @@ export default class CreateUser extends Component {
     this.getUsers();
   }
 
+  deleteUser = async (id) => {
+    console.log(id);
+    await axios.delete(`http://localhost:3000/api/users/${id}`)
+    this.getUsers();
+  }
+
   render () {
     return (
       <MDBRow>
@@ -59,9 +65,13 @@ export default class CreateUser extends Component {
         <MDBCol lg="8">
           <MDBListGroup>
             {this.state.users.map(user =>
-              <MDBListGroupItem key={user._id}>
+              <MDBListGroupItem className="list-group-item-action" key={user._id}>
                 {user.username} {user.lastname}
-                <MDBIcon icon="trash-alt" className="red-text float-right" style={{cursor:'pointer'}} />
+                <MDBIcon
+                  icon="trash-alt" className="red-text float-right"
+                  style={{cursor:'pointer'}}
+                  onClick={() => this.deleteUser(user._id)}
+                />
               </MDBListGroupItem>
             )}
           </MDBListGroup>
