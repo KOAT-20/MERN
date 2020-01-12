@@ -1,4 +1,5 @@
 import React from 'react';
+import { MDBContainer } from 'mdbreact';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 // Componens
@@ -11,10 +12,12 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <Route exact path="/" component={NoteList}></Route>
-      <Route path="/edit/:id" component={CreateNote}></Route>
-      <Route path="/createNote" component={CreateNote}></Route>
-      <Route path="/createUser" component={CreateUser}></Route>
+      <MDBContainer className="mt-5">
+        <Route exact path="/" component={NoteList}></Route>
+        <Route path="/edit/:id" component={CreateNote}></Route>
+        <Route path="/createNote" component={CreateNote}></Route>
+        <Route path="/createUser" component={CreateUser}></Route>
+      </MDBContainer>
     </Router>
   );
 }
