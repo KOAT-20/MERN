@@ -3,10 +3,16 @@ import axios from 'axios';
 import {
   MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBInput
 } from 'mdbreact';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default class CreateNote extends Component {
   state = {
     users: [],
+    userSelected: '',
+    title: '',
+    description: '',
+    date: new Date(),
   }
 
   async componentDidMount () {
@@ -18,10 +24,14 @@ export default class CreateNote extends Component {
   }
 
   changeInput = (e) => {
-    console.log(e.target.value);
+    console.log(e.target.id, e.target.value);
     this.setState ({
       [e.target.id]: e.target.value
     });
+  }
+
+  changeDate = (date) => {
+    this.setState({date})
   }
 
   onSubmitNote = (e) => {
@@ -49,19 +59,31 @@ export default class CreateNote extends Component {
                 </div>
                 <div className='form-group'>
                   <MDBInput
+                    id='title'
                     className='form-control'
+                    onChange={this.changeInput}
                     type='text'
-                    label='Title' 
+                    label='Title'
                     outline
                   />
                 </div>
                 <div className='form-group'>
                   <MDBInput
+                    id='description'
                     className='form-control'
+                    onChange={this.changeInput}
                     type='textarea'
                     label='Description'
                     style={{borderRadius:'5px 5px', height:'100px'}}
                     outline
+                  />
+                </div>
+                <div className='form-group'>
+                  <DatePicker
+                    className='form-control'
+                    dateFormat='dd/MM/yyyy'
+                    selected={this.state.date}
+                    onChange={this.changeDate}
                   />
                 </div>
                 <MDBBtn className='w-75' type='submit' color='secondary'>
