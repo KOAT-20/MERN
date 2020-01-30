@@ -34,8 +34,16 @@ export default class CreateNote extends Component {
     this.setState({date})
   }
 
-  onSubmitNote = (e) => {
+  onSubmitNote =  async (e) => {
     e.preventDefault();
+    const newNote = {
+      title: this.state.title,
+      description: this.state.description,
+      date: this.state.date,
+      author: this.state.userSelected,
+    }
+    const res = await axios.post('http://localhost:3000/api/notes', newNote);
+    console.log(JSON.parse(res.config.data));
   }
 
   render () {
@@ -50,9 +58,10 @@ export default class CreateNote extends Component {
                   <select className='form-control' id='userSelected'
                     onChange={this.changeInput}
                     >
+                    <option value=''>Select a user</option>
                     {this.state.users.map(user =>
-                      <option key={user._id} value={user.username}>
-                        {user.username}
+                      <option key={user._id} value={`${user.username} ${user.lastname}`}>
+                        {user.username} {user.lastname}
                       </option>
                     )}
                   </select>
