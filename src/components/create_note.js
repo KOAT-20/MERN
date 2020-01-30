@@ -44,6 +44,7 @@ export default class CreateNote extends Component {
     }
     const res = await axios.post('http://localhost:3000/api/notes', newNote);
     console.log(JSON.parse(res.config.data));
+    window.location.href = '/';
   }
 
   render () {
