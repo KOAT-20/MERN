@@ -21,7 +21,7 @@ export default class CreateUser extends Component {
     this.setState ({
       users: res.data
     })
-    console.log('Usuarios:', res.data);
+    // console.log('Usuarios:', res.data);
   }
 
   changeInput = (e) => {
@@ -41,7 +41,7 @@ export default class CreateUser extends Component {
   }
 
   deleteUser = async (id) => {
-    console.log(`User delete with the ID: ${id}`);
+    // console.log(`User delete with the ID: ${id}`);
     await axios.delete(`http://localhost:3000/api/users/${id}`)
     this.getUsers();
   }
