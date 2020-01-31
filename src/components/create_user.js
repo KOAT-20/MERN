@@ -21,7 +21,7 @@ export default class CreateUser extends Component {
     this.setState ({
       users: res.data
     })
-    console.log(res.data);
+    console.log('Usuarios:', res.data);
   }
 
   changeInput = (e) => {

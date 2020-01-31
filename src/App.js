@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <MDBContainer className="mt-5">
+      <MDBContainer className="mt-5 mb-5">
         <Route exact path="/" component={NoteList}></Route>
         <Route path="/edit/:id" component={CreateNote}></Route>
         <Route path="/createNote" component={CreateNote}></Route>
