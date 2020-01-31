@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { format } from 'timeago.js';
+import { Link } from 'react-router-dom';
 import {
   MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBIcon
 } from 'mdbreact';
@@ -44,8 +45,14 @@ export default class NoteList extends Component {
                 <hr />
                 <div className='float-left'>{format(note.date)}</div>
                 <div className='float-right'>
+                  <Link to={`/edit/${note._id}`}>
+                    <MDBIcon
+                      far icon="edit" className='grey-text'
+
+                    />
+                  </Link>
                   <MDBIcon
-                    icon='trash-alt' className='red-text'
+                    icon='trash-alt' className='red-text ml-2'
                     style={{cursor:'pointer'}}
                     onClick={() => this.deleteNote(note._id)}
                   />

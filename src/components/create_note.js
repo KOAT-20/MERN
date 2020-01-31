@@ -13,14 +13,29 @@ export default class CreateNote extends Component {
     title: '',
     description: '',
     date: new Date(),
+    editNote: false,
+    idNote: '',
   }
 
   async componentDidMount () {
+    console.log(this.props.match.params.id);
     const res = await axios.get('http://localhost:3000/api/users');
     console.log(res.data);
     this.setState({
       users: res.data,
     });
+    if (this.props.match.params.id) {
+      const res = await axios.get(`http://localhost:3000/api/notes/${this.props.match.params.id}`);
+      console.log('Id note:', res.data);
+      this.setState({
+        title: res.data.title,
+        description: res.data.description,
+        date: new Date(res.data.date),
+        userSelected: res.data.author,
+        editNote: true,
+        idNote: this.props.match.params.id,
+      });
+    }
   }
 
   changeInput = (e) => {
@@ -42,8 +57,12 @@ export default class CreateNote extends Component {
       date: this.state.date,
       author: this.state.userSelected,
     }
-    const res = await axios.post('http://localhost:3000/api/notes', newNote);
-    console.log(JSON.parse(res.config.data));
+    if (this.state.editNote) {
+      await axios.put(`http://localhost:3000/api/notes/${this.state.editNote}`, newNote);
+    } else {
+      const res = await axios.post('http://localhost:3000/api/notes', newNote);
+      console.log(JSON.parse(res.config.data));
+    }
     window.location.href = '/';
   }
 
@@ -56,8 +75,11 @@ export default class CreateNote extends Component {
               <h3>Create a Note</h3>
               <form onSubmit={this.onSubmitNote}>
                 <div className='form-group'>
-                  <select className='form-control' id='userSelected'
+                  <select
+                    className='form-control'
+                    id='userSelected'
                     onChange={this.changeInput}
+                    value={this.state.userSelected}
                     >
                     <option value=''>Select a user</option>
                     {this.state.users.map(user =>
@@ -72,6 +94,7 @@ export default class CreateNote extends Component {
                     id='title'
                     className='form-control'
                     onChange={this.changeInput}
+                    value={this.state.title}
                     type='text'
                     label='Title'
                     outline
@@ -82,6 +105,7 @@ export default class CreateNote extends Component {
                     id='description'
                     className='form-control'
                     onChange={this.changeInput}
+                    value={this.state.description}
                     type='textarea'
                     label='Description'
                     style={{borderRadius:'5px 5px', height:'100px'}}
@@ -94,6 +118,7 @@ export default class CreateNote extends Component {
                     dateFormat='dd/MM/yyyy'
                     selected={this.state.date}
                     onChange={this.changeDate}
+                    value={this.state.date}
                   />
                 </div>
                 <MDBBtn className='w-75' type='submit' color='secondary'>
