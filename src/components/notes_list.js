@@ -37,15 +37,15 @@ export default class NoteList extends Component {
               <MDBCardBody>
                 <MDBCardTitle>{note.title}</MDBCardTitle>
                 <hr />
-                <MDBCardText>
+                <MDBCardText className='text-justify'>
                   {note.description}
                 </MDBCardText>
                 <div>{note.author}</div>
-                <div>{format(note.date)}</div>
                 <hr />
+                <div className='float-left'>{format(note.date)}</div>
                 <div className='float-right'>
                   <MDBIcon
-                    icon="trash-alt" className='red-text'
+                    icon='trash-alt' className='red-text'
                     style={{cursor:'pointer'}}
                     onClick={() => this.deleteNote(note._id)}
                   />
