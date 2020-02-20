@@ -59,11 +59,15 @@ export default class CreateNote extends Component {
     }
     if (this.state.idNote) {
       await axios.put(`http://localhost:3000/api/notes/${this.state.idNote}`, newNote);
+      window.alert('Nota actualizada exitosamente!');
     } else {
       await axios.post('http://localhost:3000/api/notes', newNote);
+      window.alert('Nota creada exitosamente!');
       // console.log(JSON.parse(res.config.data));
     }
-    window.location.href = '/';
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 1000);
   }
 
   render () {

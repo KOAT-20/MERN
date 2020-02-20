@@ -7,6 +7,7 @@ import Navigation from './components/navigation.js';
 import NoteList from './components/notes_list.js';
 import CreateNote from './components/create_note.js';
 import CreateUser from './components/create_user.js';
+import Notifications from './components/notifications.js';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/createNote" component={CreateNote}></Route>
         <Route path="/createUser" component={CreateUser}></Route>
       </MDBContainer>
+      {/* <Notifications /> */}
     </Router>
   );
 }
