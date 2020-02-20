@@ -18,9 +18,9 @@ export default class CreateNote extends Component {
   }
 
   async componentDidMount () {
-    // console.log(this.props.match.params.id);
+    // console.log('NoteId:',this.props.match.params.id);
     const res = await axios.get('http://localhost:3000/api/users');
-    console.log(res.data);
+    // console.log(res.data);
     this.setState({
       users: res.data,
     });
@@ -33,7 +33,7 @@ export default class CreateNote extends Component {
         date: new Date(res.data.date),
         userSelected: res.data.author,
         editNote: true,
-        idNote: this.props.match.params.id,
+        idNote: res.data._id,
       });
     }
   }
@@ -57,8 +57,8 @@ export default class CreateNote extends Component {
       date: this.state.date,
       author: this.state.userSelected,
     }
-    if (this.state.editNote) {
-      await axios.put(`http://localhost:3000/api/notes/${this.state.editNote}`, newNote);
+    if (this.state.idNote) {
+      await axios.put(`http://localhost:3000/api/notes/${this.state.idNote}`, newNote);
     } else {
       await axios.post('http://localhost:3000/api/notes', newNote);
       // console.log(JSON.parse(res.config.data));

@@ -7,9 +7,10 @@ import axios from 'axios';
 
 export default class CreateUser extends Component {
   state = {
-    users:[],
-    username:'',
-    lastname:'',
+    users: [],
+    username: '',
+    lastname: '',
+    password: ''
   }
 
   async componentDidMount () {
@@ -34,9 +35,10 @@ export default class CreateUser extends Component {
     e.preventDefault();
     await axios.post('http://localhost:3000/api/users', {
       username: this.state.username,
-      lastname: this.state.lastname
+      lastname: this.state.lastname,
+      password: this.state.password,
     })
-    this.setState({username: '', lastname: ''})
+    this.setState({username: '', lastname: '', password: ''})
     this.getUsers();
   }
 
@@ -56,6 +58,7 @@ export default class CreateUser extends Component {
               <form onSubmit={this.createUser}>
                 <MDBInput id="username" value={this.state.username} type="text" label="User Name" onChange={this.changeInput} outline />
                 <MDBInput id="lastname" value={this.state.lastname} type="text" label="Last Name" onChange={this.changeInput} outline />
+                <MDBInput id="password" value={this.state.password} type="password" label="Type Password" onChange={this.changeInput} outline />
                 <div className="text-center">
                   <MDBBtn type="submit" color="secondary" className="w-75">Save</MDBBtn>
                 </div>
