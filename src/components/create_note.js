@@ -60,7 +60,7 @@ export default class CreateNote extends Component {
     if (this.state.editNote) {
       await axios.put(`http://localhost:3000/api/notes/${this.state.editNote}`, newNote);
     } else {
-      const res = await axios.post('http://localhost:3000/api/notes', newNote);
+      await axios.post('http://localhost:3000/api/notes', newNote);
       // console.log(JSON.parse(res.config.data));
     }
     window.location.href = '/';
